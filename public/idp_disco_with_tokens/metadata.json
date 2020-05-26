@@ -1,0 +1,7 @@
+{
+	"category": "federation",
+	"external_idp": "https://idpx.oktapreview.com",
+	"external_idp_oktaprise_id": "0oar8nebzsC5zMQCF0h7",
+	"short_desc": "idp discovery, federation to OIDC (Okta), with tokens",
+	"title": "idp disco - with tokens"
+}

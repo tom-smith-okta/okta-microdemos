@@ -1,0 +1,19 @@
+{
+  "name": "okta-microdemos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_PATH=. node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tom.smith@okta.com",
+  "license": "ISC",
+  "dependencies": {
+    "connect-dynamodb": "^2.0.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "request": "^2.88.0"
+  }
+}

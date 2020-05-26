@@ -1,0 +1,5 @@
+{
+	"category": "SSO",
+	"short_desc": "SSO (with session tags) via SAML into AWS",
+	"title": "SSO to AWS"
+}

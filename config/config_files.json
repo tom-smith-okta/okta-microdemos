@@ -1,0 +1,70 @@
+{
+	"basics": {
+		"file_name": "basics.json",
+		"required": true,
+		"extensible": true,
+		"resource_type": "settings"
+	},
+	"css_misc_path": {
+		"file_name": "misc.css",
+		"required": true,
+		"resource_type": "local_webserver_path",
+		"extensible": false
+	},
+	"description": {
+		"file_name": "description.html",
+		"required": false,
+		"extensible": false
+	},
+	"home_page": {
+		"file_name": "home.html",
+		"required": true,
+		"extensible": false
+	},
+	"js_misc": {
+		"file_name": "misc.js",
+		"required": true,
+		"extensible": false
+	},
+	"metadata": {
+		"file_name": "metadata.json",
+		"required": false,
+		"extensible": true,
+		"resource_type": "settings"
+	},
+	"okta_settings": {
+		"file_name": "okta_settings.json",
+		"required": true,
+		"extensible": true,
+		"resource_type": "settings"
+	},
+	"oktaprise_ids": {
+		"file_name": "oktaprise_ids.json",
+		"required": false,
+		"extensible": true,
+		"resource_type": "settings"
+	},
+	"other_settings": {
+		"file_name": "other_settings.json",
+		"required": false,
+		"extensible": true,
+		"resource_type": "settings"
+	},
+	"render_widget_js": {
+		"file_name": "render_widget.js",
+		"required": true,
+		"resource_type": "inline_js",
+		"extensible": false
+	},
+	"ui_settings": {
+		"file_name": "ui_settings.json",
+		"required": true,
+		"extensible": true,
+		"resource_type": "settings"
+	},
+	"widget_config": {
+		"file_name": "widget_config.json",
+		"required": true,
+		"extensible": true
+	}
+}

@@ -1,0 +1,17 @@
+This demo shows SSO from Okta to AWS.
+<br>
+The Okta app is a "vanilla" SAML app that calls a SAML inline hook.
+<br>
+The SAML inline hook sends the user info (including group membership) to an external service.
+<br>
+The external service looks at the user's group memberships and sends back to Okta a patch with the AWS accounts and roles to be included in the SAML assertion.
+<p></p>
+
+<b>What to do</b><br>
+
+Log in as user:<br>
+	diana.prince<br>
+
+Then, click on the link for "AWS - raw SAML with inline hook". Diana will arrive at the AWS console.
+
+<p></p>

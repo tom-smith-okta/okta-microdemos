@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+
+	<!-- ******* TITLE OF PAGE ******** -->
+
+	<title>Okta demo: {{title}}</title>
+
+	<!-- *******************************-->
+	<!-- FAVICON -->
+	<!-- *******************************-->
+
+	<link rel="shortcut icon" href="{{img_favicon_url}}" type="image/vnd.microsoft.icon" />
+
+	<!-- *******************************-->
+	<!-- CSS -->
+	<!-- *******************************-->
+
+	<!-- css for design template -->
+	<link rel='stylesheet' href='{{css_bootstrap_template_url}}' type='text/css' />
+
+	<!-- Font awesome css (for icons etc.) -->
+	<link rel='stylesheet' href='{{css_font_awesome_url}}' type='text/css' />
+
+	<!-- Okta widget css -->
+	<link rel='stylesheet' href='{{css_okta_widget_url}}' type='text/css' />
+
+	<!-- Misc css -->
+	<link rel='stylesheet' href='{{css_misc_path}}' type='text/css' />
+
+	<!-- *******************************-->
+	<!-- JAVASCRIPT -->
+	<!-- *******************************-->
+
+	<!-- JQuery -->
+	<script src='{{js_jquery_url}}'></script>
+
+	<!-- skel -->
+	<script src='{{js_skel_url}}'></script>
+
+	<!-- bootstrap template -->
+	<script src='{{js_bootstrap_template_url}}'></script>
+
+	<!-- bootstrap template utilities -->
+	<script src='{{js_bootstrap_util_url}}'></script>
+
+	<!-- get date utility -->
+	<script src='{{js_get_date_url}}'></script>
+
+	<!-- Okta widget -->
+	<script src='{{js_okta_widget_url}}'></script>
+
+	<!-- *******************************-->
+	<!-- Okta javascript -->
+	<!-- *******************************-->
+
+	<script>
+
+	// if you are editing next line, note backticks
+	var widget_config_json = `{{widget_config}}`
+
+	var widget_config = JSON.parse(widget_config_json)
+
+	var oktaSignIn = new OktaSignIn(widget_config)
+
+	// Check for Okta session on page load
+	window.onload = function() {
+
+		getDate() // just UI candy
+
+		has_code_in_url(function(err, obj) {
+
+			console.log("the object is: ")
+
+			console.dir(obj)
+
+			if (err || obj.code == "") {}
+			else {
+				console.log("the code is: " + obj.code)
+
+				post_code(obj, function(err, secret_stuff) {
+
+					console.log("posted the code.")
+				})
+			}
+		})
+
+		console.log("checking for Okta session...");
+
+		oktaSignIn.authClient.session.exists()
+		.then(function(exists) {
+			if (exists) {
+
+				console.log("there is an active session:")
+
+				oktaSignIn.authClient.session.get()
+				.then(function(session) {
+					console.dir(session)
+					localStorage.setItem("given_name", session.login)
+					sessionStorage.setItem('okta_session', JSON.stringify(session))
+					update_ui("authenticated")
+				})
+				.catch(function(err) {
+					console.dir(err)
+				})
+			}
+			else {
+
+				const oktaprise_url = '{{okta_tenant}}/sso/idps/{{oktaprise_id}}?fromURI={{REDIRECT_URI}}'
+
+				// console.log("the oktaprise url is: " + oktaprise_url)
+				window.location.href = oktaprise_url
+
+				console.log("no Okta session found.")
+				update_ui("anon")
+				$("#oktaWidget").hide()
+				renderWidget()
+			}
+		})
+	}
+
+	{{render_widget_js}}
+
+	</script>
+
+	<script>
+
+	function has_code_in_url(callback) {
+
+		if (location.hash) {
+
+			console.log("there is a hash in the url.")
+
+			var hash = location.hash
+
+			if (hash.includes("code")) {
+
+				var ret_val = {}
+
+				var a = hash.split("&")
+
+				for (kvp of a) {
+
+					var b = kvp.split("=")
+
+					if (b[0] === "code" || b[0] === "#code") {
+						ret_val.code = b[1]
+					}
+					else if (b[0] === "state" || b[0] === "#state") {
+						ret_val.state = b[1]
+					}
+				}
+
+				return callback(null, ret_val)
+			}
+			else {
+				console.log("no code in the url.")
+				return callback("no_code")
+			}
+		}
+		else { return callback("no_code") }
+	}
+
+	function post_code(obj, callback) {
+
+		console.log("the code in the post_code function is:" + obj.code)
+
+		$.post(
+			"/code", {
+				code: obj.code,
+				demo_name: "{{demo_name}}",
+				state: obj.state
+		})
+		.done(function( data ) {
+			if (data == "received access token") {
+				console.log("received access token")
+				show_admin_stuff()
+			}
+			else {
+				console.log("something went wrong with the access token request.")
+			}
+		})
+	}
+
+	function show_admin_stuff() {
+
+		$.get( "/get_admin_content?demo_name={{demo_name}}", function( data ) {
+			if (data.hasOwnProperty("message") && data.message == "no access token in the app session") {
+
+				var authz_url = '{{okta_issuer}}/v1/authorize'
+
+				authz_url += '?client_id={{okta_client_id}}'
+				authz_url += '&redirect_uri={{REDIRECT_URI}}'
+				authz_url += '&scope=okta_se'
+				authz_url += '&response_mode=fragment'
+				authz_url += '&response_type=code'
+				authz_url += '&state=' + data.state
+				authz_url += '&prompt=none'
+
+				console.log("the authz_url is: " + authz_url)
+
+				window.location.href = authz_url
+			}
+			else {
+
+				var content = "<table><tr><th>category</th><th>demo name</th><th>okta tenant(s)</th><th>sample user</th><th>password</th></tr>"
+
+				content += data + "</table>"
+
+				update_ui_panel(content)
+			}
+		})
+	}
+
+	// Misc UI scripts
+
+	function get_description_link() {
+
+		var ret_val = ""
+
+		if ($("#description").text() != "") {
+			ret_val = "<li><a href = '#' id = 'login' onclick = 'toggle_element(\"description\")'>description</a></li>"
+		}
+
+		return ret_val
+	}
+
+	function set_menu(auth_state) {
+
+		var menu = ""
+
+		if (auth_state == "authenticated") {
+			menu = "<li><a href = '#' onclick = 'signout()'>Log out</a></li>"
+
+			if (localStorage.getItem("given_name")) {
+				menu += "<li><a href='#'>Welcome, " + localStorage.getItem("given_name") + "!</a></li>"
+			}
+
+			menu += "<li><a href='#' onclick='show_admin_stuff()'>show admin stuff</a></li>"
+		}
+		else {
+			menu = "<li><a href = '#' id = 'login' onclick = 'toggle_element(\"oktaWidget\")'>Log in / Register</a></li>"
+		}
+
+		menu += get_description_link()
+
+		menu += "<li><a href = '/demos'>demos</a></li>"
+
+		$("#authLinks").html(menu)
+	}
+
+	function signout() {
+		console.log("attempting to sign out...")
+
+		localStorage.clear()
+		sessionStorage.clear()
+
+		$.get("/kill_app_session", function(data) {
+			$.ajax({
+				type: "DELETE",
+				dataType: 'json',
+				url: "{{okta_tenant}}/api/v1/sessions/me",
+				xhrFields: {
+					withCredentials: true
+				},
+				success: function (data) {
+
+					location.reload()
+				},
+				error: function (textStatus, errorThrown) {
+					console.log('error deleting session: ' + JSON.stringify(textStatus))
+					console.log(errorThrown)
+
+					setTimeout(function() {
+						location.reload()
+					}, (5 * 1000))
+				},
+				async: true
+			})
+		})
+	}
+
+	function toggle_element(element_id) {
+		$("#" + element_id).toggle()
+	}
+
+	function update_ui(auth_state) {
+
+		set_menu(auth_state)
+	}
+
+	</script>
+
+	<!-- misc js -->
+	<script>{{js_misc}}</script>
+
+</head>
+
+<body>
+
+<!-- Wrapper -->
+
+<div id="wrapper">
+
+	<!-- Header -->
+
+	<header id="header">
+
+		<h1><a href="/">{{txt_brand}}</a></h1>
+
+		<nav class="links">
+			<ul id = "authLinks"></ul>
+		</nav>
+
+		<nav class="main">
+			<ul>
+				<li class = "menu"><a class="fa-bars" href = "#menu">Menu</a></li>
+			</ul>
+		</nav>
+
+	</header>
+
+	<!-- Menu -->
+	<section id="menu">
+
+		<!-- Links -->
+		<section>
+			<ul class="links" id="dropdown_links">
+				<li>
+					<a href = "#">
+						<h3>{{okta_tenant}}</h3>
+					</a>
+				</li>
+			</ul>
+		</section>
+	</section>
+
+	<!-- Main -->
+	<div id="main">
+
+		<div id="container">
+			<div id="oktaWidget"></div>
+		</div>
+
+		<div id="description" style="display: none">
+			{{description}}
+		</div>
+
+		<div id="ui_panel" style="display: none; border-top-style: solid; border-width: 1px;">
+			{{ui_panel}}
+		</div>
+
+		<article class="post">
+			<header>
+				<div class="title">
+					<h2><a href="#">{{txt_headline}}</a></h2>
+					<p>{{txt_detail}}</p>
+				</div>
+				
+				<div class="meta">
+					<time class="published"></time>
+				</div>
+			</header>
+
+			<a href="#" class="image featured">
+				<img src="{{img_main_url}}" alt="" />
+			</a>
+
+			<footer>
+				<ul class="actions">
+					<li><a href="#" class="button big">Continue</a></li>
+				</ul>
+				<ul class="stats">
+					<li><a href="#">General</a></li>
+					<li><a href="#" class="icon fa-heart">28</a></li>
+					<li><a href="#" class="icon fa-comment">128</a></li>
+				</ul>
+			</footer>
+		</article>
+
+		<div id="unresolved_placeholders">
+			{{unresolved_placeholders}}
+		</div>
+
+	</div> <!--Main-->
+
+	<!-- Sidebar -->
+	<section id="sidebar">
+
+		<!-- Intro -->
+		<section id="intro">
+			<a href="#" class="logo">
+				<img src="{{img_logo_url}}" alt="" />
+			</a>
+
+			<header>
+				<h2>{{txt_brand}}</h2>
+				<p>{{txt_tagline}}</p>
+			</header>
+		</section>
+
+		<!-- Mini Posts -->
+		<section>
+			<div class="mini-posts">
+
+				<!-- Mini Post -->
+				<article class="mini-post">
+					<header>
+						<h3><a href="#">{{txt_minor_headline}}</a></h3>
+						<time class="published"></time>
+						<a href="#" class="author"><img src="{{img_minor_url}}" alt="" /></a>
+					</header>
+					<a href="#" class="image"><img src="{{img_minor_url}}" alt="" /></a>
+				</article>
+
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<section id="footer">
+			<ul class="icons">
+				<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+				<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+			<p class="copyright">&copy; Okta. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+		</section>
+
+	</div>
+
+</div>
+
+</body>
+</html>

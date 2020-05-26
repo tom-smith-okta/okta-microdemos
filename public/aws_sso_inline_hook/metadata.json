@@ -1,0 +1,5 @@
+{
+	"category": "SSO",
+	"short_desc": "SSO via SAML (with a SAML assertion inline hook) into AWS",
+	"title": "SSO to AWS (inline SAML hook)"
+}

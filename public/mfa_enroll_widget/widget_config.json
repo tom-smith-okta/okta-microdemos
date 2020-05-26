@@ -1,0 +1,11 @@
+{
+	"extends": "default",
+
+	"features": {
+		"registration": true,
+		"multiOptionalFactorEnroll": true
+	},
+
+
+	"username": "{username}@mfa.com"
+}

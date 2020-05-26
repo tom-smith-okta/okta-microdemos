@@ -1,0 +1,4 @@
+{
+	"baseUrl": "{{okta_tenant}}",
+	"logo": "{{img_logo_url}}"
+}

@@ -1,0 +1,5 @@
+{
+	"category": "authn",
+	"short_desc": "get an Okta session using the widget",
+	"title": "get an Okta session"
+}

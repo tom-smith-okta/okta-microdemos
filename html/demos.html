@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+
+	<!-- ******* TITLE OF PAGE ******** -->
+
+	<title>Okta microdemos</title>
+
+	<!-- *******************************-->
+	<!-- FAVICON -->
+	<!-- *******************************-->
+
+	<link rel="shortcut icon" href="{{img_favicon_url}}" type="image/vnd.microsoft.icon" />
+
+	<!-- *******************************-->
+	<!-- CSS -->
+	<!-- *******************************-->
+
+	<!-- css for design template -->
+	<link rel='stylesheet' href='{{css_bootstrap_template_url}}' type='text/css' />
+
+	<!-- Font awesome css (for icons etc.) -->
+	<link rel='stylesheet' href='{{css_font_awesome_url}}' type='text/css' />
+
+	<!-- Misc css -->
+	<link rel='stylesheet' href='{{css_misc_path}}' type='text/css' />
+
+	<!-- *******************************-->
+	<!-- JAVASCRIPT -->
+	<!-- *******************************-->
+
+	<!-- JQuery -->
+	<script src='{{js_jquery_url}}'></script>
+
+	<!-- skel -->
+	<script src='{{js_skel_url}}'></script>
+
+	<!-- bootstrap template -->
+	<script src='{{js_bootstrap_template_url}}'></script>
+
+	<!-- bootstrap template utilities -->
+	<script src='{{js_bootstrap_util_url}}'></script>
+
+</head>
+
+<body>
+
+<!-- Wrapper -->
+
+<div id="wrapper">
+
+	<!-- Header -->
+
+	<header id="header">
+
+		<h1><a href="/">Okta microdemos</a></h1>
+
+		<nav class="links">
+			<ul id = "authLinks"></ul>
+		</nav>
+
+		<nav class="main">
+			<ul>
+				<li class = "menu"><a class="fa-bars" href = "#menu">Menu</a></li>
+			</ul>
+		</nav>
+
+	</header>
+
+	<!-- Menu -->
+	<section id="menu">
+
+		<!-- Links -->
+		<section>
+			<ul class="links" id="dropdown_links">
+				<li>
+					<a href = "#">
+						<h3>{{okta_tenant}}</h3>
+					</a>
+				</li>
+
+				<li>
+					<a href = "/admin">
+						<h3>Okta SE login</h3>
+					</a>
+				</li>
+			</ul>
+		</section>
+	</section>
+
+	<!-- Main -->
+	<div id="main">
+
+		<a name = "top"></a>
+
+		<p><b>Okta microdemos</b></p>
+
+		<table border = 0>
+			<tr><th>category</th><th>name</th><th>short desc</th><th>overview</th></tr>
+		{{menu}}
+
+		</table>
+
+		{{descriptions}}
+
+	</div> <!--Main-->
+
+	<!-- Sidebar -->
+	<section id="sidebar">
+
+		<!-- Mini Posts -->
+		<section>
+			<div class="mini-posts">
+
+			</div>
+		</section>
+
+	</div>
+
+</div>
+
+</body>
+</html>

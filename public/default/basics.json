@@ -1,0 +1,26 @@
+{
+
+	"css_bootstrap_template_url": "https://tom-smith-okta-atkodemo.s3.amazonaws.com/future_imperfect.css",
+
+	"css_font_awesome_url": "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
+
+	"css_misc_path": "/default/misc.css",
+
+	"css_okta_widget_url": "https://global.oktacdn.com/okta-signin-widget/3.8.2/css/okta-sign-in.min.css",
+
+	"img_favicon_url": "https://www.okta.com/sites/all/themes/developer/favicon.ico",
+
+	"js_bootstrap_template_url": "https://tom-smith-okta-atkodemo.s3.amazonaws.com/future_imperfect.js",
+
+	"js_bootstrap_util_url": "https://tom-smith-okta-atkodemo.s3.amazonaws.com/util.js",
+
+	"js_get_date_url": "https://tom-smith-okta-atkodemo.s3.amazonaws.com/get_date.js",
+
+	"js_misc_path": "/default/misc.js",
+
+	"js_jquery_url": "https://code.jquery.com/jquery-3.5.0.js",
+
+	"js_okta_widget_url": "https://global.oktacdn.com/okta-signin-widget/3.8.2/js/okta-sign-in.min.js",
+
+	"js_skel_url": "https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"
+}

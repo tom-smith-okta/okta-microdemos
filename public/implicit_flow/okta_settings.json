@@ -1,0 +1,7 @@
+{
+	"okta_tenant": "https://microdemos.oktapreview.com",
+
+	"okta_client_id": "0oar121ah8mqWv9Re0h7",
+
+	"okta_issuer": "https://microdemos.oktapreview.com/oauth2/default"
+}

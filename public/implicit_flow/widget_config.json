@@ -1,0 +1,20 @@
+{
+	"baseUrl": "{{okta_tenant}}",
+	"logo": "{{img_logo_url}}",
+	"clientId": "{{okta_client_id}}",
+	"redirectUri": "{{REDIRECT_URI}}",
+
+	"authScheme": "OAUTH2",
+	"authParams": {
+		"issuer": "{{okta_issuer}}",
+		"responseType": ["id_token", "token"],
+		"responseMode": "fragment",
+		"scope": [
+			"openid",
+			"email",
+			"profile",
+			"address",
+			"phone"
+		]
+	}
+}

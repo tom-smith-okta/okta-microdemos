@@ -1,0 +1,15 @@
+
+#okta-widget-container {
+	z-index: 101;
+	position: absolute;
+	top: 60px;
+	left: 20px;
+}
+
+#my_login_button {
+	font-size: 11.2px;
+	font-family: "Raleway", Helvetica, sans-serif;
+	font-weight: 800;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+}

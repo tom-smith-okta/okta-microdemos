@@ -1,0 +1,18 @@
+{
+
+	"img_logo_url": "https://tom-smith-okta-images.s3.amazonaws.com/atkodemo/logo.png",
+
+	"img_main_url": "https://tom-smith-okta-images.s3.amazonaws.com/finance/finance_main.png",
+
+	"img_minor_url": "https://tom-smith-okta-images.s3.amazonaws.com/finance/finance_small.png",
+
+	"txt_brand": "BankCo",
+
+	"txt_headline": "Mutual funds",
+
+	"txt_detail": "Increase returns, reduce risk",
+
+	"txt_minor_headline": "Expert research",
+
+	"txt_tagline": "Get started today"
+}

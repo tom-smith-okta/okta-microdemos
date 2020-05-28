@@ -251,36 +251,7 @@
 		$("#authLinks").html(menu)
 	}
 
-	function signout() {
-		console.log("attempting to sign out...")
-
-		localStorage.clear()
-		sessionStorage.clear()
-
-		$.get("/kill_app_session", function(data) {
-			$.ajax({
-				type: "DELETE",
-				dataType: 'json',
-				url: "{{okta_tenant}}/api/v1/sessions/me",
-				xhrFields: {
-					withCredentials: true
-				},
-				success: function (data) {
-
-					location.reload()
-				},
-				error: function (textStatus, errorThrown) {
-					console.log('error deleting session: ' + JSON.stringify(textStatus))
-					console.log(errorThrown)
-
-					setTimeout(function() {
-						location.reload()
-					}, (5 * 1000))
-				},
-				async: true
-			})
-		})
-	}
+	{{sign_out_js}}
 
 	function toggle_element(element_id) {
 		$("#" + element_id).toggle()
@@ -322,20 +293,7 @@
 
 	</header>
 
-	<!-- Menu -->
-	<section id="menu">
-
-		<!-- Links -->
-		<section>
-			<ul class="links" id="dropdown_links">
-				<li>
-					<a href = "#">
-						<h3>{{okta_tenant}}</h3>
-					</a>
-				</li>
-			</ul>
-		</section>
-	</section>
+	{{menu_right_html}}
 
 	<!-- Main -->
 	<div id="main">

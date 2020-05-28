@@ -87,7 +87,7 @@
 			for (token_obj of res) {
 				if (token_obj.hasOwnProperty("idToken")) {
 					oktaSignIn.authClient.tokenManager.add('id_token', token_obj)
-					localStorage.setItem("given_name", token_obj.claims.name)
+					localStorage.setItem("user_display_name", session.login)
 				}
 				else if (token_obj.hasOwnProperty("accessToken")) {
 					oktaSignIn.authClient.tokenManager.add('access_token', token_obj)
@@ -126,7 +126,7 @@
 				.then(function(session) {
 					console.dir(session)
 					sessionStorage.setItem('okta_session', JSON.stringify(session))
-					localStorage.setItem("given_name", session.login)
+					localStorage.setItem("user_display_name", session.login)
 					update_ui("authenticated")
 				})
 				.catch(function(err) {
@@ -189,35 +189,7 @@
 		$("#my_login_button").attr("onclick", "show_widget()")
 	}
 
-	function signout() {
-		console.log("attempting to sign out...")
-
-		$.ajax({
-			type: "DELETE",
-			dataType: 'json',
-			url: "{{okta_tenant}}/api/v1/sessions/me",
-			xhrFields: {
-				withCredentials: true
-			},
-			success: function (data) {
-				localStorage.clear()
-				sessionStorage.clear()
-				location.reload()
-			},
-			error: function (textStatus, errorThrown) {
-				console.log('error deleting session: ' + JSON.stringify(textStatus))
-				console.log(errorThrown)
-
-				localStorage.clear()
-				sessionStorage.clear()
-
-				setTimeout(function() {
-					location.reload()
-				}, (5 * 1000))
-			},
-			async: true
-		})
-	}
+	{{sign_out_js}}
 
 	function toggle_element(element_id) {
 		$("#" + element_id).toggle()
@@ -267,26 +239,7 @@
 
 	</header>
 
-	<!-- Menu -->
-	<section id="menu">
-
-		<!-- Links -->
-		<section>
-			<ul class="links" id="dropdown_links">
-				<li>
-					<a href = "#">
-						<h3>{{okta_tenant}}</h3>
-					</a>
-				</li>
-
-				<li>
-					<a href = "/admin">
-						<h3>Okta SE login</h3>
-					</a>
-				</li>
-			</ul>
-		</section>
-	</section>
+	{{menu_right_html}}
 
 	<!-- Main -->
 	<div id="main">

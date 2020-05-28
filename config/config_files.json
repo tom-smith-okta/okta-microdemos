@@ -26,6 +26,12 @@
 		"required": true,
 		"extensible": false
 	},
+	"menu_right_html": {
+		"file_name": "menu_right.html",
+		"required": true,
+		"extensible": false,
+		"resource_type": "html"
+	},
 	"metadata": {
 		"file_name": "metadata.json",
 		"required": false,
@@ -52,6 +58,12 @@
 	},
 	"render_widget_js": {
 		"file_name": "render_widget.js",
+		"required": true,
+		"resource_type": "inline_js",
+		"extensible": false
+	},
+	"sign_out_js": {
+		"file_name": "sign_out.js",
 		"required": true,
 		"resource_type": "inline_js",
 		"extensible": false

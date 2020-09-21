@@ -1,0 +1,5 @@
+{
+	"category": "integration",
+	"short_desc": "send front-end events to segment",
+	"title": "okta + segment integration"
+}

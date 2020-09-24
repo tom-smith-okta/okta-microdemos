@@ -64,8 +64,6 @@
 	<!-- Okta widget -->
 	<script src='{{js_okta_widget_url}}'></script>
 
-
-
 	<!-- *******************************-->
 	<!-- Okta javascript -->
 	<!-- *******************************-->
@@ -187,12 +185,18 @@
 		// but any could be pulled from the okta id token if
 		// they are stored in the okta user profile
 
+		var okta_tokens = JSON.parse(localStorage.getItem("okta-token-storage"))
+
+		var given_name = okta_tokens.id_token.claims.given_name
+		var family_name = okta_tokens.id_token.claims.family_name
+		var email = okta_tokens.id_token.claims.email
+
 		analytics.identify(
-			okta_user_obj.claims.email,
+			email,
 			{
-				name: okta_user_obj.claims.given_name + " " + okta_user_obj.claims.family_name,
+				name: given_name + " " + family_name,
 				title: 'Solutions Architect',
-				email: okta_user_obj.claims.email,
+				email: email,
 				company: {id: 567, name: 'Initech'},
 				phone: '570-690-4150',
 				state: 'California',

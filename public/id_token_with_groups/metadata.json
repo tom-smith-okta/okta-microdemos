@@ -1,0 +1,5 @@
+{
+	"category": "authn",
+	"short_desc": "get an id token that includes the user's groups",
+	"title": "id token with groups"
+}

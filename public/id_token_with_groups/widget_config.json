@@ -1,10 +1,6 @@
 {
-	"baseUrl": "{{okta_tenant}}",
-	"logo": "{{img_logo_url}}",
-	"clientId": "{{okta_client_id}}",
-	"redirectUri": "{{REDIRECT_URI}}",
+	"extends": "implicit_flow",
 
-	"authScheme": "OAUTH2",
 	"authParams": {
 		"issuer": "{{okta_issuer}}",
 		"responseType": ["id_token"],

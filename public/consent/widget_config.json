@@ -1,0 +1,17 @@
+{
+	"extends": "implicit_flow",
+	"authParams": {
+		"issuer": "{{okta_issuer}}",
+		"responseType": ["id_token"],
+		"responseMode": "fragment",
+		"scope": [
+			"openid",
+			"email",
+			"profile",
+			"address",
+			"phone",
+			"preferences"
+		]
+	},
+	"username": "david.bowie"
+}

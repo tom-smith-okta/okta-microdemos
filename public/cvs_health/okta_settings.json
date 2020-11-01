@@ -1,0 +1,7 @@
+{
+	"okta_tenant": "https://cvsciam20.oktapreview.com",
+
+	"okta_client_id": "0oa4c37d0VT08DUa01d6",
+
+	"okta_issuer": "https://cvsciam20.oktapreview.com/oauth2/default"
+}
